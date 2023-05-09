@@ -3,10 +3,15 @@ module RandomMain exposing (Model, Msg(..), init, main, subscriptions, update, v
 import Browser
 import Html exposing (Html, br, button, div)
 import Html.Events exposing (..)
+import Maybe exposing (andThen)
+import Platform exposing (Task)
+import Process
 import Random exposing (Generator, map3)
 import String
 import Svg exposing (..)
 import Svg.Attributes exposing (cx, cy, fill, height, r, rx, ry, stroke, viewBox, width, x, y)
+import Task exposing (Task)
+import Time
 
 
 
@@ -84,7 +89,7 @@ update msg model =
 
             else
                 ( Model firstDie secondDie
-                , Random.generate NewFace (map3 Dice roll roll roll)
+                , Task.perform (\_ -> Roll) (Process.sleep 100)
                 )
 
 
